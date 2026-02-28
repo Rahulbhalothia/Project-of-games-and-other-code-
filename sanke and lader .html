@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Snake and Ladder Game</title>
+    <style>
+        body {
+            font-family: monospace;
+        }
+        button {
+            padding: 8px 15px;
+            margin: 10px 0;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>🐍 Snake and Ladder Game</h2>
+
+<button onclick="roll()">🎲 Roll Dice</button>
+
+<p id="status"></p>
+<pre id="board"></pre>
+
+<script>
+let player1 = 0;
+let player2 = 0;
+let currentPlayer = 1;
+let won = false;
+
+/* Roll dice (1–6) */
+function rollDie() {
+    return Math.floor(Math.random() * 6) + 1;
+}
+
+/* Move player */
+function movePlayer(current, roll) {
+    let newPos = current + roll;
+    if (newPos > 100) return current;
+
+    let snakesAndLadders = {
+        6: 40,
+        23: -10,
+        45: -7,
+        61: -18,
+        65: -8,
+        77: 5,
+        98: -10
+    };
+
+    if (snakesAndLadders[newPos]) {
+        newPos += snakesAndLadders[newPos];
+    }
+
+    if (newPos < 0) newPos = 0;
+    return newPos;
+}
+
+/* Print board */
+function printBoard() {
+    let output = "";
+    let alt = 0;
+    let iterLR = 100;
+    let iterRL = 91;
+
+    while (iterLR >= 1) {
+        if (alt === 0) {
+            for (let i = iterLR; i >= iterRL; i--) {
+                if (i === player1) output += "P1 ";
+                else if (i === player2) output += "P2 ";
+                else output += (i < 10 ? " " + i : i) + " ";
+            }
+            output += "\n";
+            iterLR -= 10;
+            iterRL -= 10;
+            alt = 1;
+        } else {
+            for (let i = iterRL + 1; i <= iterLR + 10; i++) {
+                if (i === player1) output += "P1 ";
+                else if (i === player2) output += "P2 ";
+                else output += (i < 10 ? " " + i : i) + " ";
+            }
+            output += "\n";
+            alt = 0;
+        }
+    }
+
+    document.getElementById("board").innerText = output;
+}
+
+/* Roll button action */
+function roll() {
+    if (won) return;
+
+    let dice = rollDie();
+    let msg = `Player ${currentPlayer} rolled ${dice}\n`;
+
+    if (currentPlayer === 1) {
+        player1 = movePlayer(player1, dice);
+        msg += `Player 1 is at ${player1}`;
+        if (player1 === 100) {
+            msg += "\n🎉 Player 1 wins!";
+            won = true;
+        }
+    } else {
+        player2 = movePlayer(player2, dice);
+        msg += `Player 2 is at ${player2}`;
+        if (player2 === 100) {
+            msg += "\n🎉 Player 2 wins!";
+            won = true;
+        }
+    }
+
+    document.getElementById("status").innerText = msg;
+    printBoard();
+
+    currentPlayer = currentPlayer === 1 ? 2 : 1;
+}
+
+/* Initial board */
+printBoard();
+</script>
+
+</body>
+</html>
