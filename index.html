@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gaurav Cast</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="sky">
+<div class="cloud cloud1"></div>
+<div class="cloud cloud2"></div>
+<div class="rain" id="rain"></div>
+</div>
+
+<div class="container">
+
+<h1>🌤 Gaurav Cast</h1>
+
+<div class="search">
+<input id="cityInput" placeholder="Search city">
+<button onclick="searchWeather()">Search</button>
+</div>
+
+<div class="weather-card">
+
+<img id="icon">
+
+<h2 id="temp">--°C</h2>
+
+<p id="condition">Weather condition</p>
+
+<h3 id="cityName"></h3>
+
+<div class="details">
+
+<div class="box">
+💧
+<p id="humidity"></p>
+</div>
+
+<div class="box">
+🌬
+<p id="wind"></p>
+</div>
+
+<div class="box">
+🌡
+<p id="pressure"></p>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
